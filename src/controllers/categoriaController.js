@@ -12,6 +12,7 @@ export async function getCategoria(req, res) {
   //         const categoria = await categoriaService.getCategoria(id, nombre);
   //     }
   // }
+  res.send("Hello!");
 }
 
 export async function func2(req, res) {

@@ -1,10 +1,11 @@
-const express = require("express");
+import express from "express";
+import categoriaRouter from "./src/routes/categoriaRouter.js";
 const app = express();
 
 app.set("port", 3000);
 
 //Routes
-app.use(require("./src/routes/categoriaRoutes.mjs"));
+app.use(categoriaRouter);
 
 //Iniciando el servidor
 app.listen(app.get("port"), () => {
