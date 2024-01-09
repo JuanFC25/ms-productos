@@ -1,20 +1,40 @@
-export async function getCategoria(req, res) {
-  const id = req.idCategoria;
-  const categoria = req.nombreCategoria;
+import express from "express";
+import categoriaService from "../services/categoriaService.js";
 
-  console.log(categoria);
-  console.log(id);
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+export async function getCategoriaById(req, res) {
+  try {
+    const { id } = req.params;
 
-  //const nombre = req.params.idCategoria;
+    console.log(id);
 
-  // if (!!id) {
-  //     if(!!nombre) {
-  //         const categoria = await categoriaService.getCategoria(id, nombre);
-  //     }
-  // }
-  res.send("Hello!");
+    const categoria = await categoriaService.getCategoriaById(Number(id));
+
+    res.send(categoria);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message,
+    });
+  }
 }
 
-export async function func2(req, res) {
-  console.log(req);
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+export async function getCategoriaByName(req, res) {
+  try {
+    const { name } = req.params;
+
+    console.log(name);
+
+    const categoria = await categoriaService.getCategoriaByName(name);
+
+    res.send(categoria);
+  } catch (err) {
+    res.send(err.message);
+  }
 }

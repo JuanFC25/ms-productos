@@ -1,5 +1,6 @@
 import express from "express";
-import categoriaRouter from "./src/routes/categoriaRouter.js";
+import categoriaRouter from "./src/routes/categoriaRoutes.js";
+
 const app = express();
 
 app.set("port", 3000);
