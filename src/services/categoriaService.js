@@ -1,4 +1,3 @@
-import express from "express";
 import categoriaRepository from "../repository/categoriaRepository.js";
 
 // export async function getCategoria(idCategoria, nombre?: number) {
@@ -15,8 +14,28 @@ async function getCategoriaById(idCategoria) {
 }
 
 async function getCategoriaByName(name) {
-  const categoria = await categoriaRepository.getCategoriaByName(name);
-  return categoria;
+  try {
+    const categoria = await categoriaRepository.getCategoriaByName(name);
+    return categoria;
+  } catch (err) {
+    throw err;
+  }
 }
 
-export default { getCategoriaById, getCategoriaByName };
+async function getCategoriaByIdAndName(idCategoria, name) {
+  try {
+    const categoria = await categoriaRepository.getCategoriaByIdAndName(
+      idCategoria,
+      name
+    );
+    return categoria;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export default {
+  getCategoriaById,
+  getCategoriaByName,
+  getCategoriaByIdAndName,
+};
