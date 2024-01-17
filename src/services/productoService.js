@@ -63,7 +63,7 @@ async function createProducto(producto) {
 
     const { nombre, descripcion, idProveedor, stock, idCategoria } = producto;
 
-    const resp = productoRepository.createProducto(
+    const resp = await productoRepository.createProducto(
       nombre,
       descripcion,
       Number(idProveedor),
@@ -73,11 +73,43 @@ async function createProducto(producto) {
 
     return resp;
   } catch (err) {
-    if (err.code === "P2025") {
-      console.log("asdasd");
-    }
     throw err;
   }
 }
 
-export default { getProductoById, getProducto, createProducto };
+async function deleteProducto(id) {
+  try {
+    if (!id || isNaN(id)) {
+      throw new Error("El id suministrado no es valido.");
+    }
+
+    const resp = await productoRepository.deleteProducto(id);
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function updateProducto(producto) {
+  try {
+    const { id, nombre, descripcion, stock } = producto;
+
+    const resp = await productoRepository.uptadeProducto(
+      Number(id),
+      nombre,
+      descripcion,
+      isNaN(Number(stock)) ? undefined : Number(stock)
+    );
+
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
+export default {
+  getProductoById,
+  getProducto,
+  createProducto,
+  deleteProducto,
+  updateProducto,
+};

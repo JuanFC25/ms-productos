@@ -59,3 +59,39 @@ export async function createProducto(req, res) {
     });
   }
 }
+
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+export async function deleteProducto(req, res) {
+  try {
+    const id = Number(req.params.id);
+
+    const resp = await productoService.deleteProducto(id);
+
+    res.send(resp);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message,
+    });
+  }
+}
+
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+export async function updateProducto(req, res) {
+  try {
+    const producto = req.body;
+
+    const resp = productoService.updateProducto(producto);
+
+    res.send(resp);
+  } catch (err) {
+    res.status(404).send({
+      message: err.message,
+    });
+  }
+}

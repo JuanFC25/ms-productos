@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { error } from "console";
 
 const prisma = new PrismaClient();
 
@@ -99,9 +98,55 @@ async function createProducto(
 
     return resp;
   } catch (err) {
-    console.log(err);
-    console.log(err.code);
+    if (err.code === "P2025") {
+      throw new Error("El proveedor o la categoria no exiten.");
+    } else {
+      throw err;
+    }
+  }
+}
+
+async function deleteProducto(id) {
+  try {
+    const resp = await prisma.producto.delete({
+      where: {
+        id: id,
+      },
+    });
+    return resp;
+  } catch (err) {
     throw err;
   }
 }
-export default { getProductoById, getProducto, createProducto };
+
+async function uptadeProducto(id, nombre, descripcion, stock) {
+  try {
+    const resp = await prisma.producto.update({
+      where: {
+        id: id,
+      },
+      data: {
+        descripcion: descripcion,
+        stockActual: stock,
+        nombre: nombre,
+      },
+      include: {
+        categoria: true,
+        proveedor: true,
+        OrdenProvisionDetalle: true,
+      },
+    });
+
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
+
+export default {
+  getProductoById,
+  getProducto,
+  createProducto,
+  deleteProducto,
+  uptadeProducto,
+};
