@@ -1,4 +1,6 @@
 import productoRepository from "../repository/productoRepository.js";
+import categoriaService from "../services/categoriaService.js";
+import proveedorService from "../services/proveedorService.js";
 
 async function getProductoById(id) {
   try {
@@ -14,8 +16,68 @@ async function getProductoById(id) {
 }
 
 async function getProducto(queryArray) {
-  const resp = await productoRepository.getProducto(queryArray);
+  const {
+    nombreProducto,
+    nombreCategoria,
+    idCategoria,
+    nombreProveedor,
+    idProveedor,
+    stock,
+  } = queryArray;
+
+  // obtengo categoria si hay datos
+  // const categoria = await categoriaService.getCategoria({
+  //   id: idCategoria,
+  //   nombre: nombreCategoria,
+  // });
+
+  // // obtengo proveedor si hay datos
+  // const proveedor = await proveedorService.getProveedor({
+  //   id: idProveedor,
+  //   nombre: nombreProveedor,
+  // });
+
+  // const cat = categoria.length === 0 ? undefined : categoria[0];
+  // const prov = proveedor.length === 0 ? undefined : proveedor[0];
+
+  // valido el stock
+
+  const resp = await productoRepository.getProducto(
+    nombreProducto,
+    nombreCategoria,
+    idCategoria !== undefined ? Number(idCategoria) : undefined,
+    nombreProveedor,
+    queryArray.idProveedor !== undefined ? Number(idProveedor) : undefined,
+    queryArray.stock !== undefined ? Number(stock) : undefined
+  );
   return resp;
 }
 
-export default { getProductoById, getProducto };
+async function createProducto(producto) {
+  try {
+    const isEmpty = Object.keys(producto).length !== 5;
+
+    if (isEmpty) {
+      throw new Error("No se pasaron los parametros correctos.");
+    }
+
+    const { nombre, descripcion, idProveedor, stock, idCategoria } = producto;
+
+    const resp = productoRepository.createProducto(
+      nombre,
+      descripcion,
+      Number(idProveedor),
+      Number(stock),
+      Number(idCategoria)
+    );
+
+    return resp;
+  } catch (err) {
+    if (err.code === "P2025") {
+      console.log("asdasd");
+    }
+    throw err;
+  }
+}
+
+export default { getProductoById, getProducto, createProducto };

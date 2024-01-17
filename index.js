@@ -5,6 +5,10 @@ import productoRouter from "./src/routes/productoRoutes.js";
 
 const app = express();
 
+// Middleware para analizar el cuerpo de la solicitud
+app.use(express.urlencoded({ extended: true })); // disponible en el body
+app.use(express.json());
+
 app.set("port", 3000);
 
 //Routes

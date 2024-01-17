@@ -7,22 +7,18 @@ import categoriaService from "../services/categoriaService.js";
  */
 export async function getCategoria(req, res) {
   try {
-    const id = req.query.id ? req.query.id : undefined;
-    const name = req.query.name ? req.query.name : undefined;
+    const queryArray = req.query;
+    const isEmpty = Object.keys(queryArray).length === 0;
 
-    let resp;
-
-    // si no tengo ningun parametro lanzo error sino busco por los dos
-    if (!id && !name) {
+    // si no tengo ningun parametro lanzo error
+    if (isEmpty) {
       throw new Error("No se pasaron parametros a la consulta.");
-    } else if (id && name) {
-      resp = await categoriaService.getCategoriaByIdAndName(Number(id), name);
-    } else if (!id && name) {
-      resp = await categoriaService.getCategoriaByName(name);
-    } else {
-      resp = await categoriaService.getCategoriaById(Number(id));
     }
-    // si no entra en el if de arriba busco por id o por nombre
+    const resp = await categoriaService.getCategoria(queryArray);
+
+    if (resp.length === 0) {
+      throw new Error("No hubo resultados para los parametros suministrados.");
+    }
 
     res.send(resp);
   } catch (err) {

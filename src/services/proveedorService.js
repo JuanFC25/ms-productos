@@ -1,37 +1,25 @@
 import proveedorRepository from "../repository/proveedorRepository.js";
 
-async function getProveedorById(id) {
+async function getProveedor(queryArray) {
   try {
-    const proveedor = await proveedorRepository.getProveedorById(id);
-    return proveedor;
-  } catch (err) {
-    throw err;
-  }
-}
+    const { id, nombre } = queryArray;
 
-async function getProveedorByName(name) {
-  try {
-    const proveedor = await proveedorRepository.getProveedorByName(name);
-    return proveedor;
-  } catch (err) {
-    throw err;
-  }
-}
+    // valido que el id sea un numero
+    if (id !== undefined && (isNaN(Number(id)) || id === "")) {
+      throw new Error("El id suministrado no es un numero.");
+    }
 
-async function getProveedorByIdAndName(id, name) {
-  try {
-    const proveedor = await proveedorRepository.getProveedorByIdAndName(
-      id,
-      name
-    );
-    return proveedor;
+    // verifico que exista el id en la consulta
+    const parsedId = id !== undefined ? Number(id) : undefined;
+
+    const resp = await proveedorRepository.getProveedor(parsedId, nombre);
+
+    return resp;
   } catch (err) {
     throw err;
   }
 }
 
 export default {
-  getProveedorById,
-  getProveedorByName,
-  getProveedorByIdAndName,
+  getProveedor,
 };
