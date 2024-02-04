@@ -8,7 +8,10 @@ import productoService from "../services/productoService.js";
 export async function getProductoById(req, res) {
   try {
     const { id } = req.params;
-    await productoService.getProductoById(id);
+
+    const producto = await productoService.getProductoById(id);
+
+    res.send(producto);
   } catch (err) {
     res.status(404).send({
       message: err.message,
