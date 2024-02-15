@@ -12,15 +12,34 @@ export async function getProveedor(req, res) {
 
     // si no tengo ningun parametro lanzo error
     if (isEmpty) {
-      throw new Error("No se pasaron parametros a la consulta.");
+      const err = new Error("No se pasaron parametros a la consulta.");
+      err.status = 400;
+      throw err;
     }
-    const resp = await proveedorService.getProveedor(queryArray);
+
+    const { id, nombre } = queryArray;
+
+    // valido que el id sea un numero
+    if (id !== undefined && (isNaN(Number(id)) || id === "")) {
+      const err = new Error("El id suministrado no es un numero.");
+      err.status = 400;
+      throw err;
+    }
+
+    // verifico que exista el id en la consulta
+    const parsedId = id !== undefined ? Number(id) : undefined;
+
+    const resp = await proveedorService.getProveedor(parsedId, nombre);
     if (resp.length === 0) {
-      throw new Error("No hubo resultados para los parametros suministrados.");
+      const err = new Error(
+        "No hay proveedor para los parametros suministrados."
+      );
+      err.status = 404;
+      throw err;
     }
     res.send(resp);
   } catch (err) {
-    res.status(404).send({
+    res.status(err.status).send({
       message: err.message,
     });
   }

@@ -4,10 +4,6 @@ import proveedorService from "../services/proveedorService.js";
 
 async function getProductoById(id) {
   try {
-    if (!id || isNaN(id)) {
-      throw new Error("El id suministrado no es valido.");
-    }
-
     const resp = await productoRepository.getProductoById(id);
     return resp;
   } catch (err) {
@@ -55,12 +51,6 @@ async function getProducto(queryArray) {
 
 async function createProducto(producto) {
   try {
-    const isEmpty = Object.keys(producto).length !== 5;
-
-    if (isEmpty) {
-      throw new Error("No se pasaron los parametros correctos.");
-    }
-
     const { nombre, descripcion, idProveedor, stock, idCategoria } = producto;
 
     const resp = await productoRepository.createProducto(
@@ -79,10 +69,6 @@ async function createProducto(producto) {
 
 async function deleteProducto(id) {
   try {
-    if (!id || isNaN(id)) {
-      throw new Error("El id suministrado no es valido.");
-    }
-
     const resp = await productoRepository.deleteProducto(id);
     return resp;
   } catch (err) {

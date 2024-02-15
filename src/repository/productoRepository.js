@@ -11,7 +11,11 @@ async function getProductoById(id) {
         proveedor: true,
       },
     });
-    if (!resp) throw new Error(`No existe producto con el id ${id}`);
+    if (!resp) {
+      const err = new Error(`No existe producto con el id ${id}`);
+      err.status = 400;
+      throw err;
+    }
 
     return resp;
   } catch (err) {
@@ -19,33 +23,6 @@ async function getProductoById(id) {
     throw err;
   }
 }
-
-// async function getProducto(queryArray) {
-//   const { nombre, nombreProveedor,  , stock } = queryArray;
-
-//   try {
-//     const resp = await prisma.producto.findMany({
-//       where: {
-//         nombre: nombre,
-//         categoriaId: Number(categoria),
-//         stockActual: stock,
-//         proveedorId: Number(nombreProveedor),
-//       },
-//       include: {
-//         categoria: true,
-//         proveedor: true,
-//       },
-//     });
-//     console.log(resp);
-//     if (!resp)
-//       throw new Error("No existe producto con los parametros suministrados.");
-
-//     return resp;
-//   } catch (err) {
-//     console.log(err);
-//     throw err;
-//   }
-// }
 
 async function getProducto(
   nombreProducto,

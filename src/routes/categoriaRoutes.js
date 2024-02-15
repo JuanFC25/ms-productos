@@ -4,6 +4,5 @@ import express from "express";
 const categoriaRouter = express.Router();
 
 categoriaRouter.get("/categoria", getCategoria);
-// categoriaRouter.get("/categoria?name:name", getCategoriaByName);
 
 export default categoriaRouter;
