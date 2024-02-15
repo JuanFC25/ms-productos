@@ -1,6 +1,6 @@
 import express from "express";
-import { getProveedor } from "../controllers/proveedorControler.js";
-import { getProductoById } from "../controllers/productoController.js";
+import proveedorService from "../services/proveedorService.js";
+import productoService from "../services/productoService.js";
 import ordenProvisionService from "../services/orden-provisionService.js";
 
 /**
@@ -11,30 +11,39 @@ export async function createOrdenProvision(req, res) {
   try {
     const { idProveedor, listaProductos } = req.body;
 
-    console.log(idProveedor);
+    // valido que el idProveedor sea un numero
+    if (
+      idProveedor !== undefined &&
+      (isNaN(Number(idProveedor)) || idProveedor === "")
+    ) {
+      const err = new Error("El id suministrado no es un numero.");
+      err.status = 400;
+      throw err;
+    }
 
-    const proveedor = await getProveedor(idProveedor);
+    const proveedor = await proveedorService.getProveedor(idProveedor);
     console.log(proveedor);
 
-    console.log("llega asdas");
-
-    const productos = [];
-
-    listaProductos.forEach(async (prod) => {
-      const p = await getProductoById(prod.id);
-      productos.push(p);
+    const productosPromises = listaProductos.map(async (prod) => {
+      const p = await productoService.getProductoById(prod.id);
+      return p;
     });
 
-    console.log(proveedor);
-    console.log(productos);
+    const productos = await Promise.all(productosPromises);
+
+    listaProductos.forEach((prod) => {
+      prod.productoAsociado = productos.find((p) => p.id === prod.id);
+    });
 
     const resp = await ordenProvisionService.createOrdenProvision(
-      proveedor,
-      productos
+      proveedor[0],
+      listaProductos
     );
 
     res.send(resp);
   } catch (err) {
+    console.log(err);
+    console.log("vuelve hasta aca");
     res.status(err.status).send({
       message: err.message,
     });

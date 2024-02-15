@@ -7,6 +7,7 @@ async function getProductoById(id) {
     const resp = await productoRepository.getProductoById(id);
     return resp;
   } catch (err) {
+    console.log("estoy en catch prodService");
     throw err;
   }
 }

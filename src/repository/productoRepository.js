@@ -13,13 +13,14 @@ async function getProductoById(id) {
     });
     if (!resp) {
       const err = new Error(`No existe producto con el id ${id}`);
-      err.status = 400;
+      err.status = 404;
       throw err;
     }
 
     return resp;
   } catch (err) {
     console.log(err);
+    console.log("estoy en catch prodRepository");
     throw err;
   }
 }
