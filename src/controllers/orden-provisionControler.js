@@ -51,3 +51,23 @@ export async function createOrdenProvision(req, res) {
     });
   }
 }
+
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
+export async function getOrdenProvision(req, res) {
+  try {
+    const idOrden = req.params.id;
+
+    if (Number(idOrden)) {
+      console.log(idOrden);
+    } else {
+      const err = new Error("El id debe ser un numero.");
+      err.status(400);
+      throw err;
+    }
+  } catch (err) {
+    res.status(err.status).send(err.message);
+  }
+}
