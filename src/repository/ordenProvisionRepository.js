@@ -10,7 +10,13 @@ async function createOrdenProvision(orden, productos) {
         data: {
           fechaRecepcion: orden.fechaRecepcion,
           esCancelada: orden.esCancelada,
-          detalles: null,
+          detalles: {
+            create: productos.map((prod) => ({
+              cantidad: prod.cantidad,
+              producto: { connect: { id: prod.productoAsociado.id } },
+              precio: prod.precio,
+            })),
+          },
           proveedor: {
             connect: { id: orden.proveedor.id },
           },

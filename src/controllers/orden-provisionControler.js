@@ -35,6 +35,8 @@ export async function createOrdenProvision(req, res) {
       prod.productoAsociado = productos.find((p) => p.id === prod.id);
     });
 
+    console.log(listaProductos[0]);
+    console.log(listaProductos[0].productoAsociado);
     const resp = await ordenProvisionService.createOrdenProvision(
       proveedor[0],
       listaProductos
