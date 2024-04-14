@@ -65,7 +65,7 @@ export async function createProducto(req, res) {
   try {
     const producto = req.body;
 
-    const isEmpty = Object.keys(producto).length !== 5;
+    const isEmpty = Object.keys(producto).length !== 6;
 
     if (isEmpty) {
       const err = new Error("No se pasaron los parametros correctos.");

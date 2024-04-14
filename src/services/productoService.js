@@ -52,14 +52,22 @@ async function getProducto(queryArray) {
 
 async function createProducto(producto) {
   try {
-    const { nombre, descripcion, idProveedor, stock, idCategoria } = producto;
+    const {
+      nombre,
+      descripcion,
+      idProveedor,
+      stock,
+      idCategoria,
+      precioVenta,
+    } = producto;
 
     const resp = await productoRepository.createProducto(
       nombre,
       descripcion,
       Number(idProveedor),
       Number(stock),
-      Number(idCategoria)
+      Number(idCategoria),
+      Number(precioVenta)
     );
 
     return resp;
@@ -79,13 +87,14 @@ async function deleteProducto(id) {
 
 async function updateProducto(producto) {
   try {
-    const { id, nombre, descripcion, stock } = producto;
+    const { id, nombre, descripcion, stock, precioVenta } = producto;
 
     const resp = await productoRepository.uptadeProducto(
       Number(id),
       nombre,
       descripcion,
-      isNaN(Number(stock)) ? undefined : Number(stock)
+      isNaN(Number(stock)) ? undefined : Number(stock),
+      Number(precioVenta)
     );
 
     return resp;

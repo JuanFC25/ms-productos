@@ -34,12 +34,13 @@ model Producto {
   categoria             Categoria               @relation("producto_categoria_fk", fields: [categoriaId], references: [id])
   categoriaId           Int
   OrdenProvisionDetalle OrdenProvisionDetalle[] @relation("orden_provision_detalle_producto_fk")
+  precioVenta           Float
 }
 
 model OrdenProvision {
   id              Int                     @id @default(autoincrement())
   fechaGeneracion DateTime                @default(now())
-  fechaRecepcion  DateTime
+  fechaRecepcion  DateTime               
   esCancelada     Boolean                 @default(false)
   proveedor       Proveedor               @relation("orden_provision_proveedor_fk", fields: [proveedorId], references: [id])
   proveedorId     Int

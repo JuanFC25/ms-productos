@@ -61,7 +61,8 @@ async function createProducto(
   descripcion,
   idProveedor,
   stock,
-  idCategoria
+  idCategoria,
+  precioVenta
 ) {
   try {
     const resp = await prisma.producto.create({
@@ -69,6 +70,7 @@ async function createProducto(
         nombre: nombre,
         descripcion: descripcion,
         stockActual: stock,
+        precioVenta: precioVenta,
         proveedor: { connect: { id: idProveedor } },
         categoria: { connect: { id: idCategoria } },
       },
@@ -97,7 +99,7 @@ async function deleteProducto(id) {
   }
 }
 
-async function uptadeProducto(id, nombre, descripcion, stock) {
+async function uptadeProducto(id, nombre, descripcion, stock, precioVenta) {
   try {
     const resp = await prisma.producto.update({
       where: {
@@ -107,6 +109,7 @@ async function uptadeProducto(id, nombre, descripcion, stock) {
         descripcion: descripcion,
         stockActual: stock,
         nombre: nombre,
+        precioVenta: precioVenta,
       },
       include: {
         categoria: true,
