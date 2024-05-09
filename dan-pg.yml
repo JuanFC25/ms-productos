@@ -3,11 +3,11 @@ services:
     image: postgres:15
     restart: always
     environment:
-      POSTGRES_PASSWORD: ${DB_PASS}
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: ms-productos
     ports:
-      - ${DB_PORT}:5432
+      - 5432:5432
     volumes:
       - ./docker-data/db:/var/lib/postgres/data # Asegurarse que docker-data/db existe
     networks:
@@ -17,10 +17,10 @@ services:
     image: dpage/pgadmin4:latest
     container_name: pgadmin-container
     environment:
-      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
-      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+      PGADMIN_DEFAULT_EMAIL: juankaprin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: admin
     ports:
-      - ${PGADMIN_PORT}:80
+      - 8032:80
     depends_on:
       - db
     networks:
