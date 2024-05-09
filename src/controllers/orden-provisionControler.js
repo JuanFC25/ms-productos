@@ -156,9 +156,12 @@ export async function getOrdenProvisionByFecha(req, res) {
     const isEmpty = Object.keys(req.query).length === 0;
 
     if (isEmpty) {
-      const err = new Error(`No se han pasado fechas para filtrar`);
-      err.status = 404;
-      throw err;
+      // const err = new Error(`No se han pasado fechas para filtrar`);
+      // err.status = 404;
+      // throw err;
+      const resp = await ordenProvisionService.getAllOrdenProvision();
+      res.status(200).send(resp);
+      return;
     }
 
     const {
@@ -198,8 +201,8 @@ export async function confirmarOrdenProvision(req, res) {
         err.status = 404;
         throw err;
       }
-
-      if (orden.fechaRecepcion !== new Date("01-01-1969")) {
+      const date = new Date("1969-02-02");
+      if (orden.fechaRecepcion.getFullYear() !== date.getFullYear()) {
         const err = new Error(
           `La orden con el id: ${idOrden} ya fue confirmada`
         );
@@ -229,6 +232,7 @@ export async function updateOrdenProvision(req, res) {
     console.log(id);
 
     const { idProveedor, listaProductos } = req.body;
+    console.log("BODY:", req.body);
 
     const orden = await ordenProvisionService.getOrdenProvisionById(Number(id));
     console.log("orden: ", orden);
@@ -271,7 +275,7 @@ export async function updateOrdenProvision(req, res) {
       proveedor[0],
       listaProductos
     );
-
+    console.log("RESP ", resp);
     res.status(200).send(resp);
   } catch (err) {
     console.log(err);

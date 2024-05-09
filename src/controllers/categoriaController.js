@@ -5,6 +5,22 @@ import categoriaService from "../services/categoriaService.js";
  * @param {express.Request} req
  * @param {express.Response} res
  */
+export async function getAllCategorias(req, res) {
+  try {
+    const resp = await categoriaService.getAllCategorias();
+
+    res.send(resp);
+  } catch (err) {
+    res.status(err.status).send({
+      message: err.message,
+    });
+  }
+}
+
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
 export async function getCategoria(req, res) {
   try {
     const queryArray = req.query;

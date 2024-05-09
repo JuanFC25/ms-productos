@@ -9,6 +9,16 @@ async function getCategoria(parsedId, nombre) {
     throw err;
   }
 }
+
+async function getAllCategorias() {
+  try {
+    const resp = await categoriaRepository.getAllCategorias();
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
 export default {
   getCategoria,
+  getAllCategorias,
 };

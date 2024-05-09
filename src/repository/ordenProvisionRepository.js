@@ -3,10 +3,11 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function createOrdenProvision(orden, productos) {
+  let resp;
   console.log(orden);
   try {
     await prisma.$transaction(async (tx) => {
-      const ordenProvision = await tx.ordenProvision.create({
+      resp = await tx.ordenProvision.create({
         data: {
           fechaRecepcion: orden.fechaRecepcion,
           esCancelada: orden.esCancelada,
@@ -24,7 +25,7 @@ async function createOrdenProvision(orden, productos) {
       });
     });
 
-    return ordenProvision;
+    return resp;
   } catch (err) {
     console.log(err);
     throw err;
@@ -76,6 +77,21 @@ async function getOrdenProvisionByIdProveedor(proveedor) {
     });
     console.log(resp);
 
+    return resp;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+async function getAllOrdenProvision() {
+  try {
+    const resp = await prisma.ordenProvision.findMany({
+      include: {
+        detalles: false,
+        proveedor: false,
+      },
+    });
     return resp;
   } catch (err) {
     console.log(err);
@@ -162,7 +178,7 @@ async function updateOrdenProvision(orden, productos) {
       });
 
       for (const p of productos) {
-        await tx.ordenProvisionDetalle.create({
+        resp = await tx.ordenProvisionDetalle.create({
           data: {
             cantidad: p.cantidad,
             productoId: p.id,
@@ -172,7 +188,7 @@ async function updateOrdenProvision(orden, productos) {
         });
       }
     });
-    return;
+    return resp;
   } catch (err) {
     console.log(err);
     throw err;
@@ -187,4 +203,5 @@ export default {
   confirmarOrdenProvision,
   getOrdenProvisionByFecha,
   updateOrdenProvision,
+  getAllOrdenProvision,
 };

@@ -20,6 +20,21 @@ async function getProveedor(id, nombre) {
   }
 }
 
+async function getAllProveedores() {
+  try {
+    const resp = await prisma.proveedor.findMany({
+      include: {
+        productos: false,
+        ordenesDeProvision: false,
+      },
+    });
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
+
 export default {
   getProveedor,
+  getAllProveedores,
 };

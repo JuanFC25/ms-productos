@@ -9,6 +9,16 @@ async function getProveedor(parsedId, nombre) {
   }
 }
 
+async function getAllProveedores() {
+  try {
+    const resp = await proveedorRepository.getAllProveedores();
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
+
 export default {
   getProveedor,
+  getAllProveedores,
 };

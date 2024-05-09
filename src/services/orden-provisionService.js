@@ -4,7 +4,7 @@ import productoService from "./productoService.js";
 async function createOrdenProvision(proveedor, productos) {
   try {
     const ordenProvision = {
-      fechaRecepcion: new Date("01-01-1969"),
+      fechaRecepcion: new Date("02-02-1969"),
       esCancelada: false,
       proveedor: proveedor,
       detalles: null,
@@ -65,6 +65,15 @@ async function getOrdenProvisionByIdProveedor(proveedor) {
     const resp = await ordenProvisionRepository.getOrdenProvisionByIdProveedor(
       proveedor[0]
     );
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
+
+async function getAllOrdenProvision() {
+  try {
+    const resp = await ordenProvisionRepository.getAllOrdenProvision();
     return resp;
   } catch (err) {
     throw err;
@@ -154,4 +163,5 @@ export default {
   confirmarOrdenProvision,
   getOrdenProvisionByFecha,
   updateOrdenProvision,
+  getAllOrdenProvision,
 };

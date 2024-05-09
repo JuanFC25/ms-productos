@@ -115,6 +115,7 @@ export async function updateProducto(req, res) {
   try {
     const producto = req.body;
 
+    // console.log(producto);
     const resp = productoService.updateProducto(producto);
 
     res.send(resp);

@@ -5,6 +5,27 @@ import proveedorService from "../services/proveedorService.js";
  * @param {express.Request} req
  * @param {express.Response} res
  */
+export async function getAllProveedores(req, res) {
+  try {
+    const resp = await proveedorService.getAllProveedores();
+
+    res.send(resp);
+  } catch (err) {
+    console.log("ProductoController ERROR:", err.status);
+    err.status = 404;
+    console.log("ProductoController ERROR:", err.status);
+    console.log("ProductoController ERROR:", err.message);
+
+    res.status(err.status).send({
+      message: err.message,
+    });
+  }
+}
+
+/**
+ * @param {express.Request} req
+ * @param {express.Response} res
+ */
 export async function getProveedor(req, res) {
   try {
     const queryArray = req.query;

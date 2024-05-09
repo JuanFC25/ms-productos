@@ -9,6 +9,7 @@ async function getProductoById(id) {
       include: {
         categoria: true,
         proveedor: true,
+        OrdenProvisionDetalle: true,
       },
     });
     if (!resp) {
@@ -95,6 +96,8 @@ async function deleteProducto(id) {
     });
     return resp;
   } catch (err) {
+    err.status = 400;
+
     throw err;
   }
 }

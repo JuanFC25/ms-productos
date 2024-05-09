@@ -21,6 +21,20 @@ async function getCategoria(id, nombre) {
   }
 }
 
+async function getAllCategorias() {
+  try {
+    const resp = await prisma.categoria.findMany({
+      include: {
+        productos: false,
+      },
+    });
+    return resp;
+  } catch (err) {
+    throw err;
+  }
+}
+
 export default {
   getCategoria,
+  getAllCategorias,
 };
