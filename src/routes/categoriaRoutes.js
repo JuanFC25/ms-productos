@@ -6,7 +6,7 @@ import express from "express";
 
 const categoriaRouter = express.Router();
 
-categoriaRouter.get("/categoria", getCategoria);
-categoriaRouter.get("/categoria/all", getAllCategorias);
+categoriaRouter.get("/api/categoria", getCategoria);
+categoriaRouter.get("/api/categoria/all", getAllCategorias);
 
 export default categoriaRouter;

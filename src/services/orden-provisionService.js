@@ -13,6 +13,7 @@ async function createOrdenProvision(proveedor, productos) {
     // verifica que todos los productos pertenezcan al mismo proveedor
     productos.forEach((prod) => {
       if (prod.productoAsociado.proveedorId !== proveedor.id) {
+        console.log("el error esta aca");
         const err = new Error(
           "Uno o mas productos no pertenecen al proveedor suministrado"
         );

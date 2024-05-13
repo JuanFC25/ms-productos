@@ -43,7 +43,7 @@ export async function createOrdenProvision(req, res) {
       listaProductos
     );
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
     console.log(err);
     console.log("vuelve hasta aca");

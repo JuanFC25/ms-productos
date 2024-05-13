@@ -9,14 +9,14 @@ export async function getAllProveedores(req, res) {
   try {
     const resp = await proveedorService.getAllProveedores();
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
     console.log("ProductoController ERROR:", err.status);
     err.status = 404;
     console.log("ProductoController ERROR:", err.status);
     console.log("ProductoController ERROR:", err.message);
 
-    res.status(err.status).send({
+    res.status(200).status(err.status).send({
       message: err.message,
     });
   }
@@ -28,8 +28,10 @@ export async function getAllProveedores(req, res) {
  */
 export async function getProveedor(req, res) {
   try {
+    console.log("entro a getProveedor");
     const queryArray = req.query;
     const isEmpty = Object.keys(queryArray).length === 0;
+    console.log("QueryArray: ", queryArray);
 
     // si no tengo ningun parametro lanzo error
     if (isEmpty) {
@@ -58,8 +60,9 @@ export async function getProveedor(req, res) {
       err.status = 404;
       throw err;
     }
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
+    console.log(err);
     res.status(err.status).send({
       message: err.message,
     });

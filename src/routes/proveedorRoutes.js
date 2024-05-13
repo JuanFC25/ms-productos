@@ -6,7 +6,7 @@ import express from "express";
 
 const proveedorRouter = express.Router();
 
-proveedorRouter.get("/proveedor", getProveedor);
-proveedorRouter.get("/proveedor/all", getAllProveedores);
+proveedorRouter.get("/api/proveedor", getProveedor);
+proveedorRouter.get("/api/proveedor/all", getAllProveedores);
 
 export default proveedorRouter;

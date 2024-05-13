@@ -9,7 +9,7 @@ export async function getAllCategorias(req, res) {
   try {
     const resp = await categoriaService.getAllCategorias();
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
     res.status(err.status).send({
       message: err.message,
@@ -55,7 +55,7 @@ export async function getCategoria(req, res) {
       throw err;
     }
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
     res.status(err.status).send({
       message: err.message,

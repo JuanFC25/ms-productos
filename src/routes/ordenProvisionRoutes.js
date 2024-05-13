@@ -11,18 +11,21 @@ import express from "express";
 
 const ordenProvisionRouter = express.Router();
 
-ordenProvisionRouter.post("/orden-provision/create", createOrdenProvision);
-ordenProvisionRouter.get("/orden-provision/:id", getOrdenProvisionById);
-ordenProvisionRouter.delete("/orden-provision/:id", cancelOrdenProvision);
+ordenProvisionRouter.post("/api/orden-provision/create", createOrdenProvision);
+ordenProvisionRouter.get("/api/orden-provision/:id", getOrdenProvisionById);
+ordenProvisionRouter.delete("/api/orden-provision/:id", cancelOrdenProvision);
 ordenProvisionRouter.get(
-  "/orden-provision/proveedor/:id",
+  "/api/orden-provision/proveedor/:id",
   getOrdenProvisionByIdProveedor
 );
-ordenProvisionRouter.get("/orden-provision", getOrdenProvisionByFecha);
+ordenProvisionRouter.get("/api/orden-provision", getOrdenProvisionByFecha);
 ordenProvisionRouter.post(
-  "/orden-provision/confirm/:id",
+  "/api/orden-provision/confirm/:id",
   confirmarOrdenProvision
 );
-ordenProvisionRouter.patch("/orden-provision/update/:id", updateOrdenProvision);
+ordenProvisionRouter.patch(
+  "/api/orden-provision/update/:id",
+  updateOrdenProvision
+);
 
 export default ordenProvisionRouter;

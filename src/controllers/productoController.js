@@ -17,7 +17,7 @@ export async function getProductoById(req, res) {
 
     const producto = await productoService.getProductoById(id);
 
-    res.send(producto);
+    res.status(200).send(producto);
   } catch (err) {
     res.status(err.status).send({
       message: err.message,
@@ -49,8 +49,9 @@ export async function getProducto(req, res) {
       throw err;
     }
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
+    console.log(err);
     res.status(err.status).send({
       message: err.message,
     });
@@ -75,7 +76,7 @@ export async function createProducto(req, res) {
 
     const resp = await productoService.createProducto(producto);
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
     res.status(err.status).send({
       message: err.message,
@@ -99,7 +100,7 @@ export async function deleteProducto(req, res) {
 
     const resp = await productoService.deleteProducto(id);
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
     res.status(err.status).send({
       message: err.message,
@@ -118,7 +119,7 @@ export async function updateProducto(req, res) {
     // console.log(producto);
     const resp = productoService.updateProducto(producto);
 
-    res.send(resp);
+    res.status(200).send(resp);
   } catch (err) {
     res.status(404).send({
       message: err.message,
