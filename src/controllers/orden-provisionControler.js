@@ -16,13 +16,14 @@ export async function createOrdenProvision(req, res) {
       idProveedor !== undefined &&
       (isNaN(Number(idProveedor)) || idProveedor === "")
     ) {
+      console.log("[ORDENPROVISIONCONTROLLER] El id suministrado no es un numero.")
       const err = new Error("El id suministrado no es un numero.");
       err.status = 400;
       throw err;
     }
 
     const proveedor = await proveedorService.getProveedor(idProveedor);
-    console.log(proveedor);
+    //console.log(proveedor);
 
     const productosPromises = listaProductos.map(async (prod) => {
       const p = await productoService.getProductoById(prod.id);
@@ -36,8 +37,8 @@ export async function createOrdenProvision(req, res) {
       prod.productoAsociado = productos.find((p) => p.id === prod.id);
     });
 
-    console.log(listaProductos[0]);
-    console.log(listaProductos[0].productoAsociado);
+    // console.log(listaProductos[0]);
+    // console.log(listaProductos[0].productoAsociado);
     const resp = await ordenProvisionService.createOrdenProvision(
       proveedor[0],
       listaProductos
