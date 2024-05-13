@@ -157,9 +157,11 @@ async function confirmarOrdenProvision(orden, prod) {
           detalles: false,
         },
       });
-
-      return resp;
     });
+    return {
+      status: "ok",
+      message: "orden confirmada",
+    };
   } catch (err) {
     console.log(err);
     throw err;

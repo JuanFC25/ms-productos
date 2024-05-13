@@ -16,7 +16,9 @@ export async function createOrdenProvision(req, res) {
       idProveedor !== undefined &&
       (isNaN(Number(idProveedor)) || idProveedor === "")
     ) {
-      console.log("[ORDENPROVISIONCONTROLLER] El id suministrado no es un numero.")
+      console.log(
+        "[ORDENPROVISIONCONTROLLER] El id suministrado no es un numero."
+      );
       const err = new Error("El id suministrado no es un numero.");
       err.status = 400;
       throw err;
@@ -212,7 +214,7 @@ export async function confirmarOrdenProvision(req, res) {
       }
 
       const resp = await ordenProvisionService.confirmarOrdenProvision(orden);
-
+      console.log("RESPUESTA CONFIRMACION ORDEN: ", resp);
       res.status(200).send(resp);
     }
   } catch (err) {

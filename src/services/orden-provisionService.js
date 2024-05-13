@@ -14,8 +14,10 @@ async function createOrdenProvision(proveedor, productos) {
     productos.forEach((prod) => {
       if (prod.productoAsociado.proveedorId !== proveedor.id) {
         console.log("el error esta aca");
+        console.log(
+          "[ORDENPROVISIONSERVICE] Uno o mas productos no pertenecen al proveedor suministrado"
+        );
         const err = new Error(
-           console.log("[ORDENPROVISIONSERVICE] Uno o mas productos no pertenecen al proveedor suministrado")
           "Uno o mas productos no pertenecen al proveedor suministrado"
         );
         err.status = 400;
